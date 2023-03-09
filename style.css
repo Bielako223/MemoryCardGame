@@ -1,0 +1,28 @@
+body{
+    background-color: rgb(228, 240, 232);
+}
+
+.karty{
+    width: 301px;
+    float: left;
+    margin: 0.5rem;
+  }
+
+.menu{
+    padding: 0.3rem;
+    margin: 0.3rem;
+    text-align: center;
+}
+#btnStart{
+    background-color: black;
+    color: white;
+    border-color: white;
+}
+
+#btnStart:hover{
+    background-color: white;
+    color: black;
+    border-color: black;
+}
+
+

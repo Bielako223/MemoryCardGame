@@ -13,11 +13,14 @@ var secondCard = false;
 var pickedCard1;
 var pickedCarddiv;
 var cards = [];
+var leftCouples;
+var trials = 0;
 startBTN.addEventListener("click",()=>{
     document.getElementById('main').innerHTML = "";
     cards = []
     const gameLVL = document.getElementById('gamelevel').value;
-    
+    document.getElementById('wyniktekst').innerHTML = "Pozostało par: "+gameLVL+" ruchy: "+trials;
+    leftCouples = gameLVL;
     for(var i =1;i<=gameLVL;i++){
         cards.push(new cart(i, i+".png"));
         cards.push(new cart(i, i+".png"));
@@ -64,12 +67,12 @@ const printCards = (cards)=>{
         carddiv = document.createElement('div');
         cardlabel = document.createElement('img');
     }
-}
+};
 
 const pickCard = (cardId) =>{
     var pickedCard = document.getElementById("label-"+cardId);
     var pickedDiv = document.getElementById("card-"+cardId);
-    pickedDiv.setAttribute("onclick","fun()");
+    pickedDiv.removeAttribute('onclick');
     if(secondCard == false){
         pickedCard.src = cards[cardId].path;
         pickedCard1 = pickedCard;
@@ -79,20 +82,48 @@ const pickCard = (cardId) =>{
         pickedCard.src = cards[cardId].path;
         if(pickedCard.src == pickedCard1.src){
             console.log("trafiles!");
+            cards[parseInt(pickedCard1.id.split("").reverse().join(""))].right = true;
+            cards[parseInt(pickedCard.id.split("").reverse().join(""))].right = true;
+            console.log(cards);
+            winning(true);
             secondCard = false;
         }else{
-            var maindiv = document.getElementById('main');
-            var btn = document.createElement('button');
-            btn.setAttribute("onclick","badchoice()");
-            maindiv.appendChild(btn);
+            winning(false);
+           for(let i=0;i<cards.length;i++){
+            document.getElementById('card-'+i).removeAttribute('onclick');
+           }
+    setTimeout(()=>{
+        console.log("Zła")
+    pickedCard1.src="back.jpg";
+        pickedCard.src="back.jpg"
+
+            for(let i=0;i<cards.length;i++){
+                if(cards[i].right == false){
+                    document.getElementById('card-'+i).setAttribute("onclick","pickCard(\""+i+"\")");
+                }
+               }
+        secondCard = false;
+    },"2000")
+    
         }
     }
-    function badchoice(){
-        pickedCard1.src="back.jpg";
-                    pickedCard.src="back.jpg"
-                    pickedDiv.setAttribute("onclick","pickCard(\""+cardId+"\")");
-                    pickedCarddiv.setAttribute("onclick","pickCard(\""+ parseInt(pickedCarddiv.id)+"\")");
-                    secondCard = false;
-    }
-}
+};
 
+const winning = (wygrana) =>{
+    var wynik = document.getElementById('wyniktekst');
+    if(wygrana){
+        leftCouples--;
+        trials++;
+        if(leftCouples == 0){
+            wynik.innerHTML = "Wygrana! Ruchy: "+trials;
+            trials=0;
+        }else{
+            wynik.innerHTML="Pozostało par: "+ leftCouples+" ruchy: "+trials;
+        }
+    }else{
+        trials++;
+        wynik.innerHTML="Pozostało par: "+ leftCouples+" ruchy: "+trials;
+    }
+    
+}
+;
