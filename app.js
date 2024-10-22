@@ -19,7 +19,7 @@ startBTN.addEventListener("click",()=>{
     document.getElementById('main').innerHTML = "";
     cards = []
     const gameLVL = document.getElementById('gamelevel').value;
-    document.getElementById('wyniktekst').innerHTML = "Pozostało par: "+gameLVL+" ruchy: "+trials;
+    document.getElementById('wyniktekst').innerHTML = "Pairs left: "+gameLVL+" Moves: "+trials;
     leftCouples = gameLVL;
     for(var i =1;i<=gameLVL;i++){
         cards.push(new cart(i, i+".png"));
@@ -35,13 +35,10 @@ startBTN.addEventListener("click",()=>{
 function shuffle(array) {
     var copy = [], n = array.length, i;
   
-    // While there remain elements to shuffle…
     while (n) {
   
-      // Pick a remaining element…
       i = Math.floor(Math.random() * array.length);
   
-      // If not already shuffled, move it to the new array.
       if (i in array) {
         copy.push(array[i]);
         delete array[i];
@@ -115,14 +112,14 @@ const winning = (wygrana) =>{
         leftCouples--;
         trials++;
         if(leftCouples == 0){
-            wynik.innerHTML = "Wygrana! Ruchy: "+trials;
+            wynik.innerHTML = "Victory! Moves: "+trials;
             trials=0;
         }else{
-            wynik.innerHTML="Pozostało par: "+ leftCouples+" ruchy: "+trials;
+            wynik.innerHTML="Pairs left: "+ leftCouples+" Moves: "+trials;
         }
     }else{
         trials++;
-        wynik.innerHTML="Pozostało par: "+ leftCouples+" ruchy: "+trials;
+        wynik.innerHTML="Pairs left: "+ leftCouples+" Moves: "+trials;
     }
     
 }
